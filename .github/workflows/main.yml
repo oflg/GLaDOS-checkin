@@ -1,10 +1,10 @@
-name: GLaDOS Auto Checkin
+name: GLaDOS Checkin with Notify
 
 on:
   schedule:
-    # 北京时间每天上午 10:00 自动运行 (UTC 时间 2:00)
+    # 北京时间每天上午 10:00 自动运行
     - cron: '0 2 * * *'
-  workflow_dispatch: # 允许手动点按钮测试
+  workflow_dispatch:
 
 jobs:
   checkin:
@@ -15,26 +15,50 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: Install dependencies
+      - name: Install requests
         run: pip install requests
 
-      - name: Run Checkin
+      - name: Run Checkin & Notify
         env:
-          # 这里会读取你在 Settings 里填写的 COOKIE
           GLADOS_COOKIE: ${{ secrets.COOKIE }}
+          TG_TOKEN: ${{ secrets.TG_TOKEN }}
+          TG_ID: ${{ secrets.TG_ID }}
         run: |
           python -c "
           import requests
           import os
           import json
+          import sys
 
-          # 1. 获取 Cookie
+          # --- 1. 发送 Telegram 通知的函数 ---
+          def send_telegram(message):
+              token = os.environ.get('TG_TOKEN')
+              chat_id = os.environ.get('TG_ID')
+              if not token or not chat_id:
+                  print('⚠️ 未配置 Telegram，跳过通知')
+                  return
+              
+              tg_url = f'https://api.telegram.org/bot{token}/sendMessage'
+              data = {
+                  'chat_id': chat_id,
+                  'text': message,
+                  'parse_mode': 'Markdown'
+              }
+              try:
+                  r = requests.post(tg_url, json=data)
+                  if r.status_code == 200:
+                      print('📢 Telegram 通知发送成功')
+                  else:
+                      print(f'⚠️ 通知发送失败: {r.text}')
+              except Exception as e:
+                  print(f'⚠️ 通知发送异常: {e}')
+
+          # --- 2. 主逻辑 ---
           cookie = os.environ.get('GLADOS_COOKIE')
           if not cookie:
-              print('❌ 错误: 未找到 Cookie，请检查 Settings > Secrets')
+              print('❌ 错误: 未找到 Cookie')
               exit(1)
 
-          # 2. 设置请求头，伪装成浏览器
           url = 'https://glados.rocks/api/user/checkin'
           headers = {
               'cookie': cookie,
@@ -45,29 +69,37 @@ jobs:
           }
           payload = {'token': 'glados.one'}
 
-          print('⏳ 开始尝试签到...')
+          log_msg = ''
+          
           try:
-              # 发送请求
+              print('⏳ 开始签到...')
               response = requests.post(url, headers=headers, json=payload)
-              print(f'📡 状态码: {response.status_code}')
-              
-              # 解析结果
               res_json = response.json()
-              msg = res_json.get('message')
               code = res_json.get('code')
+              msg = res_json.get('message')
               
-              # 3. 判断结果
+              # 组装通知内容
               if code == 0:
-                  print(f'✅ 签到成功! 获得点数。消息: {msg}')
+                  status = '✅ 签到成功'
+                  log_msg = f'{status}\n信息: {msg}'
               elif code == 1:
-                  print(f'🟡 今天已经签到过了。消息: {msg}')
+                  status = '🟡 已签到'
+                  log_msg = f'{status}\n信息: {msg}'
               elif code == -2:
-                   print(f'❌ Cookie 已过期，请去 GitHub Secrets 更新！消息: {msg}')
-                   exit(1) # 标记为失败，GitHub 会发邮件通知你
+                  status = '❌ Cookie 过期'
+                  log_msg = f'{status}\n请去 GitHub 更新 Secrets!'
               else:
-                  print(f'❌ 未知状态: {code}, 消息: {msg}')
-                  
+                  status = '❌ 未知状态'
+                  log_msg = f'{status}\nCode: {code}\nMsg: {msg}'
+              
+              print(log_msg)
+              
+              # 发送通知
+              send_telegram(f'*GLaDOS 签到报告*\n----------------\n{log_msg}')
+
           except Exception as e:
-              print(f'❌ 脚本运行出错: {e}')
+              err_msg = f'❌ 脚本运行出错: {e}'
+              print(err_msg)
+              send_telegram(err_msg)
               exit(1)
           "
