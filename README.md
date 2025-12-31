@@ -40,14 +40,14 @@ glados-auto-checkin/
 
      提示：TG_TOKEN 和 TG_ID 如果不填，脚本会自动跳过通知步骤，只进行签到。
      
-3. 启用 Actions
- 由于 GitHub 的安全策略，Fork 的项目默认可能禁用了 Actions。
- 1.点击仓库上方的 Actions 标签。
+3. 启用 Actions<br>
+ 由于 GitHub 的安全策略，Fork 的项目默认可能禁用了 Actions。<br>
+ 1.点击仓库上方的 Actions 标签。<br>
  2.如果看到绿色按钮 I understand my workflows, go ahead and enable them，请点击它。
 
 4. 测试运行<br>
- 1.在 Actions 页面左侧点击 GLaDOS Checkin。
- 2.点击右侧的 Run workflow 按钮 -> 再次点击绿色的 Run workflow。
+ 1.在 Actions 页面左侧点击 GLaDOS Checkin。<br>
+ 2.点击右侧的 Run workflow 按钮 -> 再次点击绿色的 Run workflow。<br>
  3.等待几秒后，检查运行日志或查看手机是否收到通知。
 
 <br>
