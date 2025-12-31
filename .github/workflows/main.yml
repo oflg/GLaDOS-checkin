@@ -43,7 +43,7 @@ jobs:
               'origin': 'https://glados.rocks',
               'referer': 'https://glados.rocks/console/checkin'
           }
-          payload = {'token': 'glados.network'}
+          payload = {'token': 'glados.one'}
 
           print('⏳ 开始尝试签到...')
           try:
