@@ -72,5 +72,5 @@ glados-auto-checkin/
 
 <br>
 
-## Star⭐
+## ⭐Star
 如果你觉得这个项目还不错的话，可以支持一下点个 Star⭐.
