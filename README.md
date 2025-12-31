@@ -41,17 +41,13 @@ glados-auto-checkin/
      
 3. 启用 Actions
 由于 GitHub 的安全策略，Fork 的项目默认可能禁用了 Actions。
-
-点击仓库上方的 Actions 标签。
-
-如果看到绿色按钮 I understand my workflows, go ahead and enable them，请点击它。
+ 1.点击仓库上方的 Actions 标签。
+ 2.如果看到绿色按钮 I understand my workflows, go ahead and enable them，请点击它。
 
 4. 测试运行
-在 Actions 页面左侧点击 GLaDOS Checkin。
-
-点击右侧的 Run workflow 按钮 -> 再次点击绿色的 Run workflow。
-
-等待几秒后，检查运行日志或查看手机是否收到通知。
+ 1.在 Actions 页面左侧点击 GLaDOS Checkin。
+ 2.点击右侧的 Run workflow 按钮 -> 再次点击绿色的 Run workflow。
+ 3.等待几秒后，检查运行日志或查看手机是否收到通知。
 
 
 📅 定时说明
@@ -63,9 +59,8 @@ glados-auto-checkin/
 ```
 
 ⚠️ 常见问题
-Cookie 过期：如果收到“Cookie Error”通知，请重新提取 Cookie 并更新到 Secrets 中。
-
-签到失败：请检查 Secrets 名字是否拼写正确（必须完全一致）。
+- Cookie 过期：如果收到“Cookie Error”通知，请重新提取 Cookie 并更新到 Secrets 中。
+- 签到失败：请检查 Secrets 名字是否拼写正确（必须完全一致）。
 
 
 📜 免责声明
