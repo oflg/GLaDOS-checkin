@@ -25,10 +25,10 @@ def send_telegram(message):
         print(f'❌ Telegram 请求异常: {e}')
 
 def checkin():
-    cookie = os.environ.get('COOKIE')
+    cookie = os.environ.get('GLADOS_COOKIE')
     
     if not cookie:
-        return "❌ 错误: 未在 Secrets 中配置 COOKIE"
+        return "❌ 错误: 未在 Secrets 中配置 GLADOS_COOKIE"
 
     url = "https://glados.rocks/api/user/checkin"
     headers = {
