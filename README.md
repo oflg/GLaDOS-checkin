@@ -32,11 +32,11 @@ glados-auto-checkin/
 ### 2. 配置 Secrets (环境变量)
 进入你 Fork 后的仓库，点击上方导航栏的 `Settings` -> 左侧 `Secrets and variables` -> `Actions` -> `New repository secret`，依次添加以下变量：
 
-     | 变量名 (Name) | 必填 | 说明 | 获取方式 |
-     | :--- | :---: | :--- | :--- |
-     | `GLADOS_COOKIE` | ✅ | GLaDOS 的 Cookie | 网页 F12 -> Network -> checkin 请求 -> Request Headers -> cookie |
-     | `TG_TOKEN` | ❌ | Telegram 机器人 Token | 找 @BotFather 申请 (`/newbot`) |
-     | `TG_ID` | ❌ | 接收消息的 TG 用户 ID | 找 @userinfobot 获取 |
+| 变量名 (Name) | 必填 | 说明 | 获取方式 |
+| :--- | :---: | :--- | :--- |
+| `GLADOS_COOKIE` | ✅ | GLaDOS 的 Cookie | 网页 F12 -> Network -> checkin 请求 -> Request Headers -> cookie |
+| `TG_TOKEN` | ❌ | Telegram 机器人 Token | 找 @BotFather 申请 (`/newbot`) |
+| `TG_ID` | ❌ | 接收消息的 TG 用户 ID | 找 @userinfobot 获取 |
 
 > **提示**：`TG_TOKEN` 和 `TG_ID` 如果不填，脚本会自动跳过通知步骤，只进行签到。
      
