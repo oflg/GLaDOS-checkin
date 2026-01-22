@@ -38,7 +38,7 @@ def checkin():
         'origin': 'https://glados.cloud',
         'referer': 'https://glados.cloud/console/checkin'
     }
-    payload = {'token': 'glados.one'} 
+    payload = {'token': 'glados.cloud'} 
 
     try:
         print("⏳ 开始签到...")
